@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sshagent (['ec2-ssh']) {
                     sh'''
-                    ssh ubuntu@3.107.34.25 "sudo systemsctl restart nginx"
+                    ssh ubuntu@3.107.34.25 "sudo systemctl restart nginx"
                     ''' 
                 }
             }
