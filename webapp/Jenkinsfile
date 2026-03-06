@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone Repository') {
+            steps {
+            git branch 'main'
+                url 'https://github.com/ShilpaLB28/indexfile.git'
+            }
+        }
+        stage('deploy') {
+            steps {
+                sh '''
+                scp -o StrictHostKeyChecking=no index.html ubuntu@3.107.34.25:/tmp/
+                shh ubuntu@3.107.34.25 "sudo mv /tmp/index.html /var/www/html/"
+                '''
+            }
+        }
+        stage('Restart nginx') {
+            steps {
+                sh'''
+                ssh ubuntu@3.107.34.25 "sudo systemsctl restart nginx"
+                ''' 
+            }
+        }
+    }
+}
