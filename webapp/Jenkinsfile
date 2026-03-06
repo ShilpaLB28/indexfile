@@ -16,9 +16,11 @@ pipeline {
         }
         stage('Restart nginx') {
             steps {
-                sh'''
-                ssh ubuntu@3.107.34.25 "sudo systemsctl restart nginx"
-                ''' 
+                sshagent (credentials: ['Ubuntu']) {
+                    sh'''
+                    ssh ubuntu@3.107.34.25 "sudo systemsctl restart nginx"
+                    ''' 
+                }
             }
         }
     }
