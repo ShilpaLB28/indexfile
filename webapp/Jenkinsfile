@@ -11,7 +11,7 @@ pipeline {
                 sshagent (['ec2-ssh']) {
                     sh '''
                     scp -o StrictHostKeyChecking=no webapp/index.html ubuntu@3.107.34.25:/tmp/
-                    shh ubuntu@3.107.34.25 "sudo mv /tmp/index.html /var/www/html/"
+                    ssh ubuntu@3.107.34.25 "sudo mv /tmp/index.html /var/www/html/"
                     '''
                 }
             }
