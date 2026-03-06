@@ -8,19 +8,19 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                sh '''
-                scp -o StrictHostKeyChecking=no webapp/index.html ubuntu@3.107.34.25:/tmp/
-                shh ubuntu@3.107.34.25 "sudo mv /tmp/index.html /var/www/html/"
-                '''
+                sshagent (credentials: ['Ubuntu']) {
+                    sh '''
+                    scp -o StrictHostKeyChecking=no webapp/index.html ubuntu@3.107.34.25:/tmp/
+                    shh ubuntu@3.107.34.25 "sudo mv /tmp/index.html /var/www/html/"
+                    '''
+                }
             }
         }
         stage('Restart nginx') {
             steps {
-                sshagent (credentials: ['Ubuntu']) {
-                    sh'''
-                    ssh ubuntu@3.107.34.25 "sudo systemsctl restart nginx"
-                    ''' 
-                }
+                sh'''
+                ssh ubuntu@3.107.34.25 "sudo systemsctl restart nginx"
+                ''' 
             }
         }
     }
