@@ -3,8 +3,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-            git branch 'main'
-                url 'https://github.com/ShilpaLB28/indexfile.git'
+            git branch: 'main', url: 'https://github.com/ShilpaLB28/indexfile.git'
             }
         }
         stage('deploy') {
